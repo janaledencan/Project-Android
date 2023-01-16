@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.ktx.firestore
@@ -80,25 +81,29 @@ class MainFragment : Fragment() {
         view.findViewById<Button>(R.id.myDefBtn)
             .setOnClickListener {
                 val term=view.findViewById<EditText>(R.id.editTextSearch).text.toString()
-                db.collection("newWords").document(term).collection(term[0].toString())
-                    .get()
-                    .addOnSuccessListener { result ->
-                        val words =ArrayList<RDictionary>()
-                        for (data in result.documents){
-                            val word = data.toObject(RDictionary::class.java)
-                            if (word != null){
-                                word.defid=data.id
-                                words.add (word)
+                if(term == ""){
+                    Toast.makeText(this.context, "You have to enter word to get result.", Toast.LENGTH_SHORT).show()
+                }else{
+                    db.collection("newWords").document(term).collection(term[0].toString())
+                        .get()
+                        .addOnSuccessListener { result ->
+                            val words =ArrayList<RDictionary>()
+                            for (data in result.documents){
+                                val word = data.toObject(RDictionary::class.java)
+                                if (word != null){
+                                    word.defid=data.id
+                                    words.add (word)
+                                }
+                            }
+                            shownData.addAll(words)
+
+                            recyclerAdapter = DictionaryAdapter(shownData)
+                            view.findViewById<RecyclerView>(R.id.recyclerView).apply {
+                                layoutManager = LinearLayoutManager(this.context)
+                                adapter = recyclerAdapter
                             }
                         }
-                        shownData.addAll(words)
-
-                        recyclerAdapter = DictionaryAdapter(shownData)
-                        view.findViewById<RecyclerView>(R.id.recyclerView).apply {
-                            layoutManager = LinearLayoutManager(this.context)
-                            adapter = recyclerAdapter
-                        }
-                    }
+                }
             }
         return view
     }

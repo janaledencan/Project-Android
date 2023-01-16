@@ -6,6 +6,8 @@
     <string name="definition">Type your definition here...</string>
     <string name="example">Type an example of how it is used in a sentence...</string>
     <string name="submit">Submit</string>
+    <string name="myDef">MY DEFINITIONS</string>
+    <string name="txtView">Text View</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

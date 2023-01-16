@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.Toast
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -49,26 +50,29 @@ class WordFragment : Fragment() {
 
         btnSubmit.setOnClickListener {
 
-            val newWord = RDictionary(
-                "Me",
-                "0",
-                "1",
-                nDefinition.text.toString(),
-                nExample.text.toString(),
-                "abc",
-                0,
-                0,
-                nWord.text.toString(),
-                SimpleDateFormat("yyyy-MM-dd").format(Date()).toString()
-            )
+            if(nWord.text.toString()=="" && nDefinition.text.toString()=="" && nExample.text.toString()==""){
+                Toast.makeText(this.context,"You have to complete the fields above before submitting.",Toast.LENGTH_LONG).show()
+            }else{
+                val newWord = RDictionary(
+                    "Me",
+                    "0",
+                    "1",
+                    nDefinition.text.toString(),
+                    nExample.text.toString(),
+                    "abc",
+                    0,
+                    0,
+                    nWord.text.toString(),
+                    SimpleDateFormat("yyyy-MM-dd").format(Date()).toString()
+                )
 
-            val firstCollectionRef = db.collection("newWords")
-            val firstDocRef = firstCollectionRef.document(nWord.text.toString())
-            val secondCollectionRef = firstDocRef.collection(nWord.text[0].toString())
-            val newDocRef = secondCollectionRef.document()
+                val firstCollectionRef = db.collection("newWords")
+                val firstDocRef = firstCollectionRef.document(nWord.text.toString())
+                val secondCollectionRef = firstDocRef.collection(nWord.text[0].toString())
+                val newDocRef = secondCollectionRef.document()
 
-            newDocRef.set(newWord, SetOptions.merge())
-
+                newDocRef.set(newWord, SetOptions.merge())
+            }
         }
         return view
     }
