@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">My Urban Dictionary</string>
+    <string name="new_word">NEW WORD</string>
+    <string name="introduction">All the definitions on My Urban Dictionary were written by people just like you. Now you can add your own! Share definitions that other people will find meaningful and never post hate speech or people’s personal information.</string>
+    <string name="word">Word</string>
+    <string name="definition">Type your definition here...</string>
+    <string name="example">Type an example of how it is used in a sentence...</string>
+    <string name="submit">Submit</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
