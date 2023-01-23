@@ -1,11 +1,15 @@
 package hr.ferit.janaledencan.myurbandictionary
 
+import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.util.*
 
 
 class DictionaryAdapter(private val items:ArrayList<RDictionary>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -33,12 +37,6 @@ class DictionaryAdapter(private val items:ArrayList<RDictionary>): RecyclerView.
         notifyItemRangeChanged(items.indexOf(newWord), items.size)
     }
 
-    /*addItem sam dodala
-    fun addItem(word:DictionaryR) {
-        items.add(word)
-        /*notifyItemRemoved(items.indexOf(person))
-        notifyItemRangeChanged(items.indexOf(person), items.size)*/
-    }*/
 
     class DictionaryViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val title: TextView = itemView.findViewById(R.id.word)
@@ -46,6 +44,7 @@ class DictionaryAdapter(private val items:ArrayList<RDictionary>): RecyclerView.
         private val example: TextView = itemView.findViewById(R.id.example)
         private val authorDate: TextView = itemView.findViewById(R.id.authorDate)
 
+        @SuppressLint("SetTextI18n")
         fun bind(item: RDictionary) {
 
             title.setText(item.word)
@@ -63,6 +62,18 @@ class DictionaryAdapter(private val items:ArrayList<RDictionary>): RecyclerView.
             else{
                 authorDate.setText("By ${item.author}  ${item.written_on}")
             }
-        }
+
+            /*val initialStringDate = item.written_on
+            val us = Locale("US")
+            val format: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", us)
+            try {
+               val date: Date = format.parse(initialStringDate) as Date
+               val stringDate: String = SimpleDateFormat("dd/MM/yyyy", us).format(date)
+               Log.i("Date", "" + stringDate)
+               authorDate.text = "By ${item.author}  ${initialStringDate.toString()}"
+            } catch (e: ParseException) {
+               e.printStackTrace()
+            }*/
+            }
     }
 }
