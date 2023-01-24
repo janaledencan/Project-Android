@@ -63,7 +63,7 @@ class WordFragment : Fragment() {
                     0,
                     0,
                     nWord.text.toString(),
-                    SimpleDateFormat("yyyy-MM-dd").format(Date()).toString()
+                    SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(Date()).toString()
                 )
 
                 val firstCollectionRef = db.collection("newWords")
@@ -72,6 +72,11 @@ class WordFragment : Fragment() {
                 val newDocRef = secondCollectionRef.document()
 
                 newDocRef.set(newWord, SetOptions.merge())
+
+                nWord.setText("")
+                nDefinition.setText("")
+                nExample.setText("")
+
             }
         }
         return view

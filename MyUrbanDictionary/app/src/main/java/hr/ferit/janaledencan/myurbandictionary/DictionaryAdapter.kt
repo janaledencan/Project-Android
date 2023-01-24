@@ -44,36 +44,20 @@ class DictionaryAdapter(private val items:ArrayList<RDictionary>): RecyclerView.
         private val example: TextView = itemView.findViewById(R.id.example)
         private val authorDate: TextView = itemView.findViewById(R.id.authorDate)
 
-        @SuppressLint("SetTextI18n")
+
         fun bind(item: RDictionary) {
 
             title.setText(item.word)
             definition.setText(item.definition)
             example.setText(item.example)
 
-            if(item.written_on==SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").toString()){
-                val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-                val dateTimeString = item.written_on
-                val date = dateFormat.parse(dateTimeString)
-                val dateFormatOnlyDate = SimpleDateFormat("yyyy-MM-dd")
-                val dateOnly = dateFormatOnlyDate.format(date)
-                authorDate.setText("By ${item.author}  ${dateOnly}")
-            }
-            else{
-                authorDate.setText("By ${item.author}  ${item.written_on}")
-            }
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+            val dateTimeString = item.written_on
+            val date = dateFormat.parse(dateTimeString)
+            val dateFormatOnlyDate = SimpleDateFormat("yyyy-MM-dd")
+            val dateOnly = dateFormatOnlyDate.format(date)
+            authorDate.setText("By ${item.author}  ${dateOnly}")
 
-            /*val initialStringDate = item.written_on
-            val us = Locale("US")
-            val format: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", us)
-            try {
-               val date: Date = format.parse(initialStringDate) as Date
-               val stringDate: String = SimpleDateFormat("dd/MM/yyyy", us).format(date)
-               Log.i("Date", "" + stringDate)
-               authorDate.text = "By ${item.author}  ${initialStringDate.toString()}"
-            } catch (e: ParseException) {
-               e.printStackTrace()
-            }*/
-            }
+        }
     }
 }
